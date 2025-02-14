@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Travele App🌍</title>
+   <link rel="stylesheet" href="../styles/style1.css">
+</head>
+<body>
+
+   
+   <!-- header section -->
+   <header>
+    <nav>
+        <h1>Only Travel APP you Need</h1>
+        <p>Plan your next trip with ease.</p>
+    </nav>
+</header>
+
+
+<!-- Main Content -->
+<main>
+
+
+    <section class="form-section">
+        <form  class="UIform">
+            <div>
+                <label for="city">Which city do you want to go to?</label>
+                <input type="text" id="city" placeholder="Enter your Destination" name="city">
+            </div>
+
+            <div>
+            <label for="date">Date</label>
+            <input type="date" id="date" placeholder="Select Date" name="date">
+            </div>
+
+            <div>
+                <button type="submit" id="submentbuttn">Submit</button>
+            </div>
+        </form>
+
+        <!-- Error Messages -->
+        <p id="er_city" style="display: none;"></p>
+        <p id="er_date" style="display: none;"></p>
+        
+    </section>
+
+    <!-- Output Section -->
+    <section class="travel_Info">
+        <div id="cityname"></div>
+        <div id="travelDate"></div>
+        <div id="Rdays"></div>
+        <div id="temp"></div>
+        <div id="weather"></div>
+        <div id="cityImage"></div>
+
+    </section>
+</main>
+
+
+
+
+<!-- Footer Section -->
+<footer>
+    <p>&copy; 2025 Travel Website. All Rights Reserved.</p>
+    <p>Designed with ❤️ Eng-ameen Dababat ❤️ </p>
+</footer>
+
+
+<script>
+    // Check that service workers are supported
+    if ('serviceWorker' in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js');
+        });
+    }
+</script>
+
+</body>
+</html>
