@@ -9,7 +9,7 @@ async function handelsubment(event) {
 
    const location = await getCountry();
 
-    //console.log("The Location:",location);
+    // console.log("The Location:",location);
 
     if(!Validate_Input()){
         return;
@@ -119,6 +119,7 @@ async function getCountry() {
     
     const city = document.getElementById("city").value;
 
+    
     if(city){
 
         try{
@@ -130,6 +131,9 @@ async function getCountry() {
             } 
             );
          const alldata = await res.json();
+
+        
+
          return alldata;
 
         }catch(e){

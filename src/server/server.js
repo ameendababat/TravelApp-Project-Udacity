@@ -42,18 +42,22 @@ const username = userstring.concat(userint);
 const api_key_weather = process.env.API_KEY_WEATHER;
 const api_key_apix = process.env.API_PIXAPAY;
 
-  //http://api.geonames.org/searchJSON?q=london&maxRows=1&username=ameen2000
+  //http://api.geonames.org/searchJSON?q=london&maxRows=1&username=ameendababat
 app.post("/getcity",async (req,res)=> {
+
+    
 
     const city = req.body.city;
 
-    // console.log("The username is ",username );
+    
 
     try{
 
-     // console.log("The username is ",username );
+        // console.log("The username is ",username );  
 
-     const apiurl =`https://www.geonames.org/searchJSON?q=${city}&maxRows=1&username=${username}`;
+     const apiurl =`http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=${username}`;
+
+     const fetch = (await import('node-fetch')).default;
 
      const response = await fetch(apiurl);
     if(!response.ok){
@@ -63,11 +67,12 @@ app.post("/getcity",async (req,res)=> {
     const data = await response.json();
 
     if(!data.geonames.length){
-        const errormaseg  = {
-            massege : "No City That Name",
-            error: true
-        }
-        return errormaseg;
+        // const errormaseg  = {
+        //     massege : "No City That Name",
+        //     error: true
+        // }
+        // return errormaseg;
+        return res.status(404).json({ message: "No City That Name", error: true });
     }
 
     const {lng,lat,name} =data.geonames[0];
