@@ -49,15 +49,16 @@ app.post("/getcity",async (req,res)=> {
 
     const city = req.body.city;
 
+    // console.log("📩 Received request body:", city); 
     
 
     try{
 
-        // console.log("The username is ",username );  
+        // console.log("The username is ",username ); 
 
      const apiurl =`http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=${username}`;
 
-     const fetch = (await import('node-fetch')).default;
+    //  const fetch = (await import('node-fetch')).default;
 
      const response = await fetch(apiurl);
     if(!response.ok){

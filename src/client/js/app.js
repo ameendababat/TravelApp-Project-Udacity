@@ -131,7 +131,7 @@ async function getCountry() {
             } 
             );
          const alldata = await res.json();
-
+      //  console.log("alldata* ",alldata );
         
 
          return alldata;
