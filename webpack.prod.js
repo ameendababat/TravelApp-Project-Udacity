@@ -41,6 +41,7 @@ module.exports = {
             }
         ]
       },
+     
       plugins: [
           // HTML template to use
           new HtmlWebPackPlugin({
@@ -56,6 +57,7 @@ module.exports = {
 
         new MiniCssExtractPlugin({
             filename: 'style.css', // Output CSS file name
+            
             
         }),
 

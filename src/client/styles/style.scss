@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #52738e;
+    background-color: #508d4e;
     margin: 0;
     padding: 20px;
     display: flex;
@@ -27,7 +27,7 @@ body {
 
 label {
     font-size: 1rem; /* Use relative units */
-    color: #555;
+    color: #000;
     display: block;
     margin-bottom: 10px;
 }
@@ -39,7 +39,7 @@ input[type="date"] {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    font-size: 1rem; /* Use relative units */
+    font-size: 1rem; 
 }
 
 /* Submit button styling */
@@ -88,6 +88,8 @@ button:hover {
     border-radius: 10px;
     border: 1px solid #ddd;
 }
+
+
 
 
 /* Media Queries for Responsiveness */

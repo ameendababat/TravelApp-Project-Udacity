@@ -33,7 +33,7 @@ async function handelsubment(event) {
 
 
     const image  = await getcityImage(name)
-   //console.log("The Value Image In Client",image);
+  //  console.log("The Value Image In Client",image);
 
 
      updateUI(name,date,days,weather,image);

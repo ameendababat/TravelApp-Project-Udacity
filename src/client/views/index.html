@@ -8,63 +8,40 @@
 </head>
 <body>
 
-   
-   <!-- header section -->
-   <header>
-    <nav>
-        <h1>Only Travel APP you Need</h1>
-        <p>Plan your next trip with ease.</p>
-    </nav>
-</header>
 
-
-<!-- Main Content -->
-<main>
-
-
-    <section class="form-section">
-        <form  class="UIform">
-            <div>
-                <label for="city">Which city do you want to go to?</label>
-                <input type="text" id="city" placeholder="Enter your Destination" name="city">
-            </div>
-
-            <div>
-            <label for="date">Date</label>
-            <input type="date" id="date" placeholder="Select Date" name="date">
-            </div>
-
-            <div>
-                <button type="submit" id="submentbuttn">Submit</button>
-            </div>
-        </form>
-
-        <!-- Error Messages -->
-        <p id="er_city" style="display: none;"></p>
-        <p id="er_date" style="display: none;"></p>
+    <h1>Travell Web site For You</h1>
         
-    </section>
-
-    <!-- Output Section -->
-    <section class="travel_Info">
-        <div id="cityname"></div>
-        <div id="travelDate"></div>
-        <div id="Rdays"></div>
-        <div id="temp"></div>
-        <div id="weather"></div>
-        <div id="cityImage"></div>
-
-    </section>
-</main>
+    <p id="er_city" style="display: none;"></p> 
+    <p id="er_date" style="display: none;"></p>
 
 
+<form   class="UIform" > 
+    <div>
+        <label for="city">Which city do you want to go to?</label>
+        <input type="text" id="city" placeholder="Entry your Destination" name="city">
+    </div>
+        <label for="txt2">Date </label>
+        <input type="date"  id="date" placeholder="Date" name="date">
+     <div>
 
+     
+     <button type="submit" id="submentbuttn">Submit</button>
+</form> 
 
-<!-- Footer Section -->
-<footer>
+<!-- This is Output  -->
+
+<div class="travel_Info">
+  <div id="cityname"></div>
+  <div id="travelDate"></div>
+  <div id="Rdays"></div>
+  <div id="temp"></div>
+  <div id="weather"></div> 
+  <div id="cityImage"></div>
+  <div></div>
+</div>
+
     <p>&copy; 2025 Travel Website. All Rights Reserved.</p>
     <p>Designed with ❤️ Eng-ameen Dababat ❤️ </p>
-</footer>
 
 
 <script>
