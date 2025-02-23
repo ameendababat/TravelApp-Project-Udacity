@@ -24,9 +24,9 @@ async function handelsubment(event) {
    
 
     if(lng && lat){
-        const days = getdays(date); //get Remaing Days Until Travell To City 
+        const days = getdays(date); // Remaing days Until Travell To City 
 
- // console.log("THe Days num",days);
+//  console.log("THe Days num",days);
   
      const weather = getweather(lng,lat,days);
  // console.log("The value is",weather);

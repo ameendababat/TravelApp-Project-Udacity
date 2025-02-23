@@ -42,51 +42,58 @@ const username = userstring.concat(userint);
 const api_key_weather = process.env.API_KEY_WEATHER;
 const api_key_apix = process.env.API_PIXAPAY;
 
-  //http://api.geonames.org/searchJSON?q=london&maxRows=1&username=ameendababat
-app.post("/getcity",async (req,res)=> {
+//http://api.geonames.org/searchJSON?q=london&maxRows=1&username=ameendababat
+app.post('/getcity',async (req,res) =>{
 
+
+        const city  = req.body.city; 
     
 
-    const city = req.body.city;
-
-    // console.log("📩 Received request body:", city); 
-    
-
+    // console.log("The username is ",username );
     try{
+        
+        //console.log("The City is ",city );  
+        const apiurl =`http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=${username}`;
 
-        // console.log("The username is ",username ); 
+        // const fetch = (await import('node-fetch')).default;
+        const response = await fetch(apiurl); 
+         
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();   
+        
+        if(!data.geonames.length){
+            // const errormaseg ={
+            //     massege :'No City That Name',
+            //     error:true
 
-     const apiurl =`http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=${username}`;
+            // }
+            // return errormaseg; 
 
-    //  const fetch = (await import('node-fetch')).default;
+            return res.status(404).json({ message: "No city found with that name", error: true });
+        }
 
-     const response = await fetch(apiurl);
-    if(!response.ok){
-        throw new Error(`HTTP error! Status:${response.status}`);
 
+        const {lng,lat,name} = data.geonames[0]; 
+
+       
+        const location = {lng,lat,name}; 
+        console.log("location ",location);
+
+
+         res.send(location);
+        //  console.log("location ",location);
+        //  console.log(lng); 
+        // console.log(lat);  
+        // console.log(name); 
+    
+    }catch(e){
+        res.status(500).json({ message: 'Failed to fetch data', error: e.message });
     }
-    const data = await response.json();
-
-    if(!data.geonames.length){
-        // const errormaseg  = {
-        //     massege : "No City That Name",
-        //     error: true
-        // }
-        // return errormaseg;
-        return res.status(404).json({ message: "No City That Name", error: true });
-    }
-
-    const {lng,lat,name} =data.geonames[0];
-    const location  = {lng,lat,name};
-    // //console.log(location);
-
-    res.send(location);
     
 
-    }catch(e){
-        res.status(500).json({message: 'Failed to fetch data', error: e.message });
-        
-    }
 });
 
 //API Get Weather Data Current Or Forcast Data 
@@ -102,7 +109,7 @@ app.post("/getweather",async (req,res)=> {
     }
 
     try{
-        const fetch = (await import('node-fetch')).default;
+        // const fetch = (await import('node-fetch')).default;
 
         if(days >= 0 &&days <= 7){
      
@@ -111,6 +118,8 @@ app.post("/getweather",async (req,res)=> {
             const data = await response.json();
 
             const {temp ,weather} = data.data[0];
+
+            
 
             const description  = weather.description;
 
@@ -145,7 +154,7 @@ app.post("/getweather",async (req,res)=> {
 app.post("/getimage",async (req,res) => {
 
     const name = req.body;
-// console.log("the Name of Country is:",name.name);
+   //console.log("the Name of Country is:",name.name);
 
    try{
  
