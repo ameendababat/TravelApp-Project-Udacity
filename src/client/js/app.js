@@ -21,15 +21,16 @@ async function handelsubment(event) {
     }
     else{
         const {lng,lat,name} = location;
-   
+      // console.log("lng ",lng,"lat ",lat,"name ",name);
 
     if(lng && lat){
         const days = getdays(date); // Remaing days Until Travell To City 
 
 //  console.log("THe Days num",days);
   
-     const weather = getweather(lng,lat,days);
- // console.log("The value is",weather);
+     const weather = await getweather(lng,lat,days);
+
+//  console.log("The value is",weather);
 
 
     const image  = await getcityImage(name)
@@ -54,12 +55,12 @@ async function updateUI(city,date,days,weather,image){
         `the Country he wents To Travell <mark>${city}</mark>`;
 
         document.getElementById("travelDate").innerHTML = 
-        `The Travell Date is: ${date}`;
+        `The Travell Date is:<mark> ${date}</mark>`;
 
         document.getElementById("temp").innerHTML = days >7 ?
-        `The Expected temperature is:${weather.temp} and The Temp max:${weather.app_max_temp}
-        and The temp min:${weather.app_min_temp}`:
-        `The Temperature is:${weather.temp}`;
+        `The Expected temperature is:<mark>${weather.temp}</mark> and The Temp max:<mark>${weather.app_max_temp}</mark>
+        and The temp min:<mark>${weather.app_min_temp}</mark>`:
+        `The Temperature is: <mark>${weather.temp}</mark>`;
 
         document.getElementById("weather").innerHTML = days > 7?
         `The Expected Weather is <mark>${weather.description}</mark>`:

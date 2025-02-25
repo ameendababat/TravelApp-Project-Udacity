@@ -43,57 +43,40 @@ const api_key_weather = process.env.API_KEY_WEATHER;
 const api_key_apix = process.env.API_PIXAPAY;
 
 //http://api.geonames.org/searchJSON?q=london&maxRows=1&username=ameendababat
-app.post('/getcity',async (req,res) =>{
+app.post('/getcity', async (req, res) => {
+    const username = "ameendababat";
+    const city = req.body.city;
 
+    if (!city) {
+        return res.status(400).json({ message: "City name is required", error: true });
+    }
 
-        const city  = req.body.city; 
-    
+    try {
+        const apiurl = `http://api.geonames.org/searchJSON?q=${encodeURIComponent(city)}&maxRows=1&username=${username}`;
+        // console.log("Fetching:", apiurl);
 
-    // console.log("The username is ",username );
-    try{
-        
-        //console.log("The City is ",city );  
-        const apiurl =`http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=${username}`;
-
-        // const fetch = (await import('node-fetch')).default;
-        const response = await fetch(apiurl); 
-         
-        
+        const response = await fetch(apiurl);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        const data = await response.json();   
-        
-        if(!data.geonames.length){
-            // const errormaseg ={
-            //     massege :'No City That Name',
-            //     error:true
 
-            // }
-            // return errormaseg; 
+        const data = await response.json();
+        // console.log("API Response:", data);
 
+        if (!data.geonames || data.geonames.length === 0) {
             return res.status(404).json({ message: "No city found with that name", error: true });
         }
 
+        const { lng, lat, name } = data.geonames[0];
+        const location = { lng, lat, name };
 
-        const {lng,lat,name} = data.geonames[0]; 
+        // console.log("Sending Response:", location);
+        return res.json(location);  
 
-       
-        const location = {lng,lat,name}; 
-        console.log("location ",location);
-
-
-         res.send(location);
-        //  console.log("location ",location);
-        //  console.log(lng); 
-        // console.log(lat);  
-        // console.log(name); 
-    
-    }catch(e){
-        res.status(500).json({ message: 'Failed to fetch data', error: e.message });
+    } catch (e) {
+        console.error("Server Error:", e.message);
+        return res.status(500).json({ message: "Failed to fetch data", error: e.message });
     }
-    
-
 });
 
 //API Get Weather Data Current Or Forcast Data 
@@ -105,7 +88,7 @@ app.post("/getweather",async (req,res)=> {
             message:"date cannot be in the past",
             error:true
         }
-        return errMsg
+        return res.status(400).json(errMsg);
     }
 
     try{
@@ -129,6 +112,9 @@ app.post("/getweather",async (req,res)=> {
 
             const data = await response.json();
              //console.log(data.data[data.data.length -1 ]);
+             if (!data || !data.data || data.data.length === 0) {
+                return res.status(404).json({ message: "No weather data found", error: true });
+            }
 
              const {weather,temp,app_max_temp,app_min_temp} = data.data[data.data.length-1];
 
@@ -143,6 +129,7 @@ app.post("/getweather",async (req,res)=> {
 
     }catch(e){
         console.log("error ",e);
+        res.status(500).json({ message: "Failed to fetch weather data", error: e.message });
 
     }
 
@@ -184,4 +171,5 @@ app.post("/getimage",async (req,res) => {
 });
 
 
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
