@@ -81,6 +81,9 @@ app.post('/getcity', async (req, res) => {
 
 //API Get Weather Data Current Or Forcast Data 
 app.post("/getweather",async (req,res)=> {
+
+    // console.log("Received body:", req.body); 
+    
     const {lng,lat,days} = req.body;
 
     if(days<0){

@@ -48,6 +48,7 @@ async function handelsubment(event) {
 
 async function updateUI(city,date,days,weather,image){
 
+     if(days>=0){
         document.getElementById("Rdays").innerHTML = 
         `The Reaming Days To Travel<mark> ${days}</mark>`;
 
@@ -68,7 +69,7 @@ async function updateUI(city,date,days,weather,image){
 
         document.getElementById("cityImage").innerHTML =
         `<img src="${image.image}" alt="The image Is not found">`;
-
+      }
 }
 
 
@@ -95,7 +96,12 @@ async function getcityImage(name) {
 async function getweather(lng,lat,days) {
 
     try{
-  const res = await fetch("http://localhost:4000/getweather",{
+
+      if(days<0){
+        // console.log("days ",days);
+        return {error:true,message:"can not insert date in past"};
+      }
+    const res = await fetch("http://localhost:4000/getweather",{
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({lng,lat,days})
@@ -108,7 +114,7 @@ async function getweather(lng,lat,days) {
 
 
     }catch(e){
-        console.log("error ",e);
+        console.log("error in fetch Data ",e);
 
 
     }
