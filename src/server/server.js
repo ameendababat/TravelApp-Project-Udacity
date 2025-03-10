@@ -36,16 +36,18 @@ app.get('/',(req,res)=>{
 });
 
 const userstring = process.env.USER;
+
 const userint = process.env.USERINT;
 const username = userstring.concat(userint);
 
-const api_key_weather = process.env.API_KEY_WEATHER;
-const api_key_apix = process.env.API_PIXAPAY;
+const apikey_weather = process.env.API_KEY_WEATHER;
+const apikey_apix = process.env.API_PIXAPAY;
 
 //http://api.geonames.org/searchJSON?q=london&maxRows=1&username=ameendababat
 app.post('/getcity', async (req, res) => {
-    const username = "ameendababat";
+    
     const city = req.body.city;
+    // console.log("city ",city);
 
     if (!city) {
         return res.status(400).json({ message: "City name is required", error: true });
@@ -80,9 +82,9 @@ app.post('/getcity', async (req, res) => {
 });
 
 //API Get Weather Data Current Or Forcast Data 
-app.post("/getweather",async (req,res)=> {
+app.post("/getWeather",async (req,res)=> {
 
-    // console.log("Received body:", req.body); 
+    // console.log("received body:", req.body); 
     
     const {lng,lat,days} = req.body;
 
@@ -98,20 +100,22 @@ app.post("/getweather",async (req,res)=> {
         // const fetch = (await import('node-fetch')).default;
 
         if(days >= 0 &&days <= 7){
-     
-            const response = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lng}&key=${api_key_weather}&lang=en&include=minutely`);
+            // &include=minutely
+            const response = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lng}&key=${apikey_weather}&lang=en`);
 
-            const data = await response.json();
+            const dataa = await response.json();
+            // console.log("✅ API Response:", dataa);
 
-            const {temp ,weather} = data.data[0];
-
+            const {temp ,weather} = dataa.data[0];
+        //  console.log("temp ",temp,"weather ",weather);
             
 
             const description  = weather.description;
+            // console.log("description ",description);
 
             res.send({temp,description});
         } else if(days >7){
-            const response = await fetch(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&key=${api_key_weather}&lang=en&days=${days}&units=M`);
+            const response = await fetch(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&key=${apikey_weather}&lang=en&days=${days}&units=M`);
 
             const data = await response.json();
              //console.log(data.data[data.data.length -1 ]);
@@ -140,15 +144,15 @@ app.post("/getweather",async (req,res)=> {
 
 
 
-// API  get image City
+//  get image City
 app.post("/getimage",async (req,res) => {
 
-    const name = req.body;
-   //console.log("the Name of Country is:",name.name);
+    const name = req.body.cityName;
+//    console.log(" Name of Country:",name);
 
    try{
  
-    const api =  `https://pixabay.com/api/?key=${api_key_apix}&image_type=photo&q= ${name.name}`;
+    const api =  `https://pixabay.com/api/?key=${apikey_apix}&image_type=photo&q= ${name}`;
 
   const response = await fetch(api);
 
@@ -163,7 +167,7 @@ app.post("/getimage",async (req,res) => {
 
   }
 
-     //console.log("The Result:",{image});
+    //  console.log("The Result:",{image});
 
      res.send({image});
 

@@ -1,5 +1,5 @@
-const error_city = document.getElementById("er_city"); 
-const error_date = document.getElementById("er_date"); 
+const errMsg_city = document.getElementById("er_city"); 
+const errMsg_date = document.getElementById("er_date"); 
 
 
 async function handelsubment(event) {
@@ -7,33 +7,33 @@ async function handelsubment(event) {
 
     const date = document.getElementById("date").value;
 
-   const location = await getCountry();
+    const loc = await fetchCountry();
 
-    // console.log("The Location:",location);
+    // console.log("The Location:",loc);
 
-    if(!Validate_Input()){
+    if(!validateInput()){
         return;
     }
 
-    if(!location){
-        error_city.innerHTML = "The Location Not Exist";
-        error_city.style.display ="block";
+    if(!loc){
+      errMsg_city.innerHTML = "The Location Not Exist";
+      errMsg_city.style.display ="block";
     }
     else{
-        const {lng,lat,name} = location;
-      // console.log("lng ",lng,"lat ",lat,"name ",name);
+        const {lng,lat,name} = loc;
+      console.log("lng ",lng,"lat ",lat,"name ",name);
 
     if(lng && lat){
-        const days = getdays(date); // Remaing days Until Travell To City 
+        const days = getdays(date); 
 
 //  console.log("THe Days num",days);
   
-     const weather = await getweather(lng,lat,days);
+     const weather = await fetchWeather(lng,lat,days);
 
 //  console.log("The value is",weather);
 
 
-    const image  = await getcityImage(name)
+    const image  = await fetchCityImage(name);
   //  console.log("The Value Image In Client",image);
 
 
@@ -49,72 +49,68 @@ async function handelsubment(event) {
 async function updateUI(city,date,days,weather,image){
 
      if(days>=0){
-        document.getElementById("Rdays").innerHTML = 
-        `The Reaming Days To Travel<mark> ${days}</mark>`;
+       const travelInfo = document.querySelector('.travel_Info');
+       travelInfo.innerHTML = `
+       <h2>Trip Details</h2>
+       <p><strong>Destination:</strong> <mark>${city}</mark> </p>
+       <p><strong>Travel Date:</strong> <mark>${date}</mark></p>
+       <p><strong>Days Remaining:</strong> <mark>${days}</mark></p>
+       <p><strong>Temperature:</strong> ${days > 7 ? `Expected: <mark>${weather.temp}</mark> | Max: <mark>${weather.app_max_temp}</mark> | Min: <mark>${weather.app_min_temp}</mark>` 
+        : `<mark>${weather.temp}</mark>`}</p>
+       <p><strong>Weather description:</strong> <mark>${weather.description}</mark></p>
+       <div class="image-container">
+                <img src="${image.image}" alt="image Not Available">
+       </div>
+       `;
+        
 
-        document.getElementById("cityname").innerHTML =
-        `the Country he wents To Travell <mark>${city}</mark>`;
-
-        document.getElementById("travelDate").innerHTML = 
-        `The Travell Date is:<mark> ${date}</mark>`;
-
-        document.getElementById("temp").innerHTML = days >7 ?
-        `The Expected temperature is:<mark>${weather.temp}</mark> and The Temp max:<mark>${weather.app_max_temp}</mark>
-        and The temp min:<mark>${weather.app_min_temp}</mark>`:
-        `The Temperature is: <mark>${weather.temp}</mark>`;
-
-        document.getElementById("weather").innerHTML = days > 7?
-        `The Expected Weather is <mark>${weather.description}</mark>`:
-        `The weather is :${weather.description}`;
-
-        document.getElementById("cityImage").innerHTML =
-        `<img src="${image.image}" alt="The image Is not found">`;
       }
 }
 
 
-async function getcityImage(name) {
+async function fetchCityImage(cityName) {
     
     try{
-        const res = await fetch("http://localhost:4000/getimage",{
+        const response = await fetch("http://localhost:4000/getimage",{
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({name})
+            body: JSON.stringify({cityName})
         });
-        const data = await res.json();
+        // const data = await response.json();
 
         //console.log(data); 
 
-        return data;
+        return await response.json();
     }catch(e){
-        console.log("error ",e); 
+        console.error("not fetching city image ",e); 
 
 
     }
 }
 
-async function getweather(lng,lat,days) {
+async function fetchWeather(lng,lat,days) {
 
     try{
 
       if(days<0){
         // console.log("days ",days);
-        return {error:true,message:"can not insert date in past"};
+        return {error:true,message:"not insert date in past"};
       }
-    const res = await fetch("http://localhost:4000/getweather",{
+    const response = await fetch("http://localhost:4000/getWeather",{
+      
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({lng,lat,days})
   });
 
-  const alldata = await res.json();
-//console.log("The Data is Client ",alldata);
+  // const dataa = await response.json();
+//console.log("data Client ",dataa);
 
-  return alldata;
+  return await response.json();
 
 
     }catch(e){
-        console.log("error in fetch Data ",e);
+        console.log("Error fetching data ",e);
 
 
     }
@@ -122,68 +118,66 @@ async function getweather(lng,lat,days) {
 
 }
 
-async function getCountry() {
+async function fetchCountry() {
     
     const city = document.getElementById("city").value;
 
+    if (!city) {
+      errMsg_city.innerHTML = "This field cannot  empty";
+      errMsg_city.style.display = "block";
+      return;
+  }
     
-    if(city){
-
         try{
-        const res = await fetch("http://localhost:4000/getcity",
+        const response = await fetch("http://localhost:4000/getcity",
             {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({city})
-            } 
-            );
-         const alldata = await res.json();
-      //  console.log("alldata* ",alldata );
-        
+            body: JSON.stringify({ city })
+            });
 
-         return alldata;
+        //  const dataa = await response.json();
+      //  console.log("alldata* ",dataa );
+            return await response.json();
 
         }catch(e){
-        console.log("error ",e);
+        console.error("cannot fetching country ",e);
         }
 
-    }else{
-    error_city.innerHTML = "This field cannot be  empty";
-    error_city.style.display = "block";
-    }
+    
 }
 
 
 
-async function Validate_Input(){
+async function validateInput(){
 
-    error_city.style.display = "none";
-    error_date.style.display ="none";
+  errMsg_city.style.display = "none";
+  errMsg_date.style.display ="none";
 
   const city = document.getElementById("city").value;
   const date = document.getElementById("date").value;
 
   if(!city){
-    error_city.innerHTML = "Please insert The City";
-    error_city.style.display = "block";
+    errMsg_city.innerHTML = "Please insert The City";
+    errMsg_city.style.display = "block";
     return;
 
   }
 
   if(!date){
-    error_date.innerHTML = "Please insert The  Date";
-    error_date.style.display = "block";
+    errMsg_date.innerHTML = "Please insert   Date";
+    errMsg_date.style.display = "block";
     return;
     
   }
   if(getdays(date)<0){
-    error_date.innerHTML = " Invalid  Date ";
-    error_date.style.display = "block";
+    errMsg_date.innerHTML = " Invalid  Date ";
+    errMsg_date.style.display = "block";
     return;
   }
 
-  error_city.style.display = "none";
-  error_date.style.display ="none";
+  errMsg_city.style.display = "none";
+  errMsg_date.style.display ="none";
   
   return true;
 
