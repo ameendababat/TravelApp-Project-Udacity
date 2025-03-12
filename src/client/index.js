@@ -1,11 +1,16 @@
-import {handelsubment} from './js/app';
+import {HandelOutput} from './js/app';
 
-// import To Style in The SCSS 
+// import style - sass-
 import './styles/style.scss';
 
-const submentbuttn  = document.getElementById("submentbuttn");
-submentbuttn.addEventListener("click",handelsubment);
+// ameen ahmad dababat
+// ameendababat07@gmail.com
 
-// alert("ameen ahmad dababat");
+const Submation  = document.getElementById("submit-button");
 
-export{handelsubment};
+
+Submation.addEventListener("click",HandelOutput);
+
+
+
+export{HandelOutput};

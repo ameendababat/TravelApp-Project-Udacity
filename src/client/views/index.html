@@ -3,44 +3,53 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Travele App🌍</title>
+   <meta name="description" content="Website Traval app - udacity project-">
+   <meta name="keywords" content="HTML, CSS, JavaScript, NodeJS">
+   <meta name="author" content="ameen dababat">
+   <title>🌍Travele App🌍</title>
    
 </head>
 <body>
 
-
-    <h1>Travell Web site For You</h1>
+   <!-- ameen ahmad
+   ameendababat07@gmail.com 
+   -->
+    <h1>plane your Perfect trip</h1>
         
-    <p id="er_city" style="display: none;"></p> 
-    <p id="er_date" style="display: none;"></p>
+    
+
+<div class="form-container">
+<form   class="Myform" > 
+
+        <label for="city">Destination</label>
+        <input type="text" id="city" placeholder="enter your Destination" name="city">
+
+        <label for="date">Travel date </label>
+        <input type="date"  id="date"  name="date">
 
 
-<form   class="UIform" > 
-    <div>
-        <label for="city">Which city do you want to go to?</label>
-        <input type="text" id="city" placeholder="Entry your Destination" name="city">
-    </div>
-        <label for="txt2">Date </label>
-        <input type="date"  id="date" placeholder="Date" name="date">
-     <div>
 
-     
-     <button type="submit" id="submentbuttn">Submit</button>
+        <button type="submit" id="submit-button">Submit</button>
+
 </form> 
+</div>
+<p id="msg-error-city" style="display: none;"></p> 
+<p id="msg-error-date" style="display: none;"></p>
 
-<!-- Output  -->
+<!-- Detile output  -->
 
 <div class="travel_Info">
- 
+
 </div>
 
 <!-- footer -->
-    <p>&copy; 2025 Travel Website. All Rights Reserved.</p>
-    <p>Designed with ❤️ Eng-ameen Dababat ❤️ </p>
-
+<div class="footer">
+    <p> &copy; Final udacity Project. 2025 Travel Website.</p>
+    <p>Designed with ❤️ Eng-ameen ahmad Dababat ❤️ </p>
+</div>
 
 <script>
-    // Check that service workers are supported
+    // Check that service workers  supported
     if ('serviceWorker' in navigator) {
         // Use the window load event to keep the page load performant
         window.addEventListener('load', () => {

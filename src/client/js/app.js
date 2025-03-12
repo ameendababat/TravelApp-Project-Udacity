@@ -1,11 +1,13 @@
-const errMsg_city = document.getElementById("er_city"); 
-const errMsg_date = document.getElementById("er_date"); 
+const errMsg_city = document.getElementById("msg-error-city"); 
+const errMsg_date = document.getElementById("msg-error-date"); 
 
+// ameen ahmad dababat
+// ameendababat07@gmail.com
+async function HandelOutput(event) {
 
-async function handelsubment(event) {
     event.preventDefault(); 
 
-    const date = document.getElementById("date").value;
+    const datee = document.getElementById("date").value;
 
     const loc = await fetchCountry();
 
@@ -16,28 +18,28 @@ async function handelsubment(event) {
     }
 
     if(!loc){
-      errMsg_city.innerHTML = "The Location Not Exist";
+      errMsg_city.innerHTML = "the location not exist";
       errMsg_city.style.display ="block";
     }
     else{
         const {lng,lat,name} = loc;
-      console.log("lng ",lng,"lat ",lat,"name ",name);
+      // console.log("lng ",lng,"lat ",lat,"name ",name);
 
     if(lng && lat){
-        const days = getdays(date); 
+        const days = getdays(datee); 
 
 //  console.log("THe Days num",days);
   
-     const weather = await fetchWeather(lng,lat,days);
+     const weatherr = await fetchWeather(lng,lat,days);
 
-//  console.log("The value is",weather);
-
-
-    const image  = await fetchCityImage(name);
-  //  console.log("The Value Image In Client",image);
+//  console.log("The value is",weatherr);
 
 
-     updateUI(name,date,days,weather,image);
+    const img  = await fetchCityImage(name);
+  //  console.log("The Value Image In Client",img);
+
+
+  updateOutputUi(name,datee,days,weatherr,img);
     }
     }
 
@@ -46,22 +48,22 @@ async function handelsubment(event) {
 }
 
 
-async function updateUI(city,date,days,weather,image){
+async function updateOutputUi(city,date,days,weather,image){
 
-     if(days>=0){
-       const travelInfo = document.querySelector('.travel_Info');
-       travelInfo.innerHTML = `
-       <h2>Trip Details</h2>
-       <p><strong>Destination:</strong> <mark>${city}</mark> </p>
-       <p><strong>Travel Date:</strong> <mark>${date}</mark></p>
-       <p><strong>Days Remaining:</strong> <mark>${days}</mark></p>
-       <p><strong>Temperature:</strong> ${days > 7 ? `Expected: <mark>${weather.temp}</mark> | Max: <mark>${weather.app_max_temp}</mark> | Min: <mark>${weather.app_min_temp}</mark>` 
+      if(days>=0){
+        const travelInfo = document.querySelector('.travel_Info');
+        travelInfo.innerHTML = `
+        <h2>Trip Details</h2>
+        <p><strong>Destination:</strong> <mark>${city}</mark> </p>
+        <p><strong>Travel Date:</strong> <mark>${date}</mark></p>
+        <p><strong>Days Remaining:</strong> <mark>${days}</mark></p>
+        <p><strong>Temperature:</strong> ${days > 7 ? `Expected: <mark>${weather.temp}</mark> | Max: <mark>${weather.app_max_temp}</mark> | Min: <mark>${weather.app_min_temp}</mark>` 
         : `<mark>${weather.temp}</mark>`}</p>
-       <p><strong>Weather description:</strong> <mark>${weather.description}</mark></p>
-       <div class="image-container">
+        <p><strong>Weather description:</strong> <mark>${weather.description}</mark></p>
+        <div class="image-container">
                 <img src="${image.image}" alt="image Not Available">
-       </div>
-       `;
+        </div>
+        `;
         
 
       }
@@ -195,4 +197,4 @@ const days = Math.ceil(timed/(1000*3600*24));
 return days;
 }
 
-export {handelsubment};
+export {HandelOutput};

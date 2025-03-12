@@ -1,3 +1,5 @@
+// ameen ahmad dababat
+// ameendababat07@gmail.com
 
 /*run server and routes */
 const express = require('express'); 
@@ -19,7 +21,7 @@ app.use(cors());
 const dotenv = require('dotenv');
 dotenv.config();
 
-// main project folder
+// main  folder
 app.use(express.static('dist'));
 
 
@@ -42,6 +44,9 @@ const username = userstring.concat(userint);
 
 const apikey_weather = process.env.API_KEY_WEATHER;
 const apikey_apix = process.env.API_PIXAPAY;
+
+// ameen ahmad dababat
+// ameendababat07@gmail.com
 
 //http://api.geonames.org/searchJSON?q=london&maxRows=1&username=ameendababat
 app.post('/getcity', async (req, res) => {
@@ -81,7 +86,7 @@ app.post('/getcity', async (req, res) => {
     }
 });
 
-//API Get Weather Data Current Or Forcast Data 
+//get weather Data Current or forcast  
 app.post("/getWeather",async (req,res)=> {
 
     // console.log("received body:", req.body); 

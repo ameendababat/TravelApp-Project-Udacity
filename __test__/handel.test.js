@@ -1,6 +1,8 @@
+// ameen ahmad dababat
+// ameendababat07@gmail.com
 import { handelsubment, getCountry, getweather, getcityImage } from '../src/client/js/app';
 
-// Mock API Calls
+//  API Calls
 jest.mock('../src/client/js/app', () => ({
   getCountry: jest.fn(),
   getweather: jest.fn(),
