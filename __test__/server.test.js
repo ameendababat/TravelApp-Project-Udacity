@@ -19,7 +19,7 @@ describe('GET / endpoint', () => {
         server.close(); 
     });
 
-    it('should return the index.html file with status code 200', async () => {
+    it(' return the .html file  status code 200 success', async () => {
         const response = await request(server).get('/');
         expect(response.status).toBe(200);
         expect(response.headers['content-type']).toMatch(/text\/html; charset=UTF-8/);

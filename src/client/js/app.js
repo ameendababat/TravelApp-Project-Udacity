@@ -11,7 +11,7 @@ async function HandelOutput(event) {
 
     const loc = await fetchCountry();
 
-    // console.log("The Location:",loc);
+    // console.log("The Location:",loc); // this is location my expirment
 
     if(!validateInput()){
         return;
@@ -23,19 +23,19 @@ async function HandelOutput(event) {
     }
     else{
         const {lng,lat,name} = loc;
-      // console.log("lng ",lng,"lat ",lat,"name ",name);
+      // console.log("lng ",lng,"lat ",lat,"name ",name); //testing 
 
     if(lng && lat){
         const days = getdays(datee); 
 
-//  console.log("THe Days num",days);
+//  console.log("THe Days num",days); // testing 
   
      const weatherr = await fetchWeather(lng,lat,days);
 
-//  console.log("The value is",weatherr);
+//  console.log("The value is",weatherr);   //testiing
 
 
-    const img  = await fetchCityImage(name);
+    const img  = await fetchCityImage(name);  
   //  console.log("The Value Image In Client",img);
 
 
@@ -78,9 +78,9 @@ async function fetchCityImage(cityName) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({cityName})
         });
-        // const data = await response.json();
+        // const data = await response.json();  // testing
 
-        //console.log(data); 
+        //console.log(data);  // testiing
 
         return await response.json();
     }catch(e){
@@ -95,18 +95,19 @@ async function fetchWeather(lng,lat,days) {
     try{
 
       if(days<0){
-        // console.log("days ",days);
+        // console.log("days ",days); // testing 
         return {error:true,message:"not insert date in past"};
       }
     const response = await fetch("http://localhost:4000/getWeather",{
       
+
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({lng,lat,days})
   });
 
-  // const dataa = await response.json();
-//console.log("data Client ",dataa);
+  // const dataa = await response.json();  // testing
+//console.log("data Client ",dataa); // testing
 
   return await response.json();
 
@@ -138,8 +139,8 @@ async function fetchCountry() {
             body: JSON.stringify({ city })
             });
 
-        //  const dataa = await response.json();
-      //  console.log("alldata* ",dataa );
+        //  const dataa = await response.json(); // testing
+      //  console.log("alldata* ",dataa );  // testing
             return await response.json();
 
         }catch(e){
@@ -153,11 +154,15 @@ async function fetchCountry() {
 
 async function validateInput(){
 
-  errMsg_city.style.display = "none";
-  errMsg_date.style.display ="none";
+ 
 
   const city = document.getElementById("city").value;
+
   const date = document.getElementById("date").value;
+
+  errMsg_city.style.display = "none";
+
+  errMsg_date.style.display ="none";
 
   if(!city){
     errMsg_city.innerHTML = "Please insert The City";
@@ -168,6 +173,7 @@ async function validateInput(){
 
   if(!date){
     errMsg_date.innerHTML = "Please insert   Date";
+  
     errMsg_date.style.display = "block";
     return;
     
@@ -185,7 +191,7 @@ async function validateInput(){
 
 }
 
-function getdays(date){
+function getdays(date){   // Determin days to travels
 const now = new Date();
 
 const travelDate = new Date(date);

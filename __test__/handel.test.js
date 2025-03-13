@@ -1,19 +1,19 @@
 // ameen ahmad dababat
 // ameendababat07@gmail.com
-import { handelsubment, getCountry, getweather, getcityImage } from '../src/client/js/app';
+import { HandelOutput, fetchCountry, fetchWeather, fetchCityImage } from '../src/client/js/app';
 
-//  API Calls
+// Mock API Calls
 jest.mock('../src/client/js/app', () => ({
-  getCountry: jest.fn(),
-  getweather: jest.fn(),
-  getcityImage: jest.fn(),
-  handelsubment: jest.fn(),
+  HandelOutput: jest.fn(),
+  fetchCountry: jest.fn(),
+  fetchWeather: jest.fn(),
+  fetchCityImage: jest.fn(),
 }));
 
-  describe('handelsubment', () => {
+describe('HandelOutput', () => {
   beforeEach(() => {
     document.body.innerHTML = `
-      <input id="date" value="2024-12-31" />
+      <input id="date" value="2025-12-31" />
       <input id="city" value="Paris" />
       <div id="Rdays"></div>
       <div id="cityname"></div>
@@ -24,35 +24,32 @@ jest.mock('../src/client/js/app', () => ({
     `;
   });
 
-  describe('handelsubment', () => {
-    it('should call the necessary functions and update the UI', async () => {
-      const mockEvent = { preventDefault: jest.fn() };
-  
-      // Mock the return values
-      getCountry.mockResolvedValue({ lng: 2.3522, lat: 48.8566, countryName: 'France' });
-      getweather.mockResolvedValue({ temp: 15, app_max_temp: 18, app_min_temp: 12, description: 'Cloudy' });
-      getcityImage.mockResolvedValue({ image: 'http://example.com/paris.jpg' });
-  
-      // Call the function
-      await handelsubment(mockEvent);
-  
-  
-    });
+  // ameen ahmad dababat
+// ameendababat07@gmail.com
+
+  it('calls  functions and updates  UI', async () => {
+    const mockEvent = { preventDefault: jest.fn() };
+
+    // Mock  return values
+    fetchCountry.mockResolvedValue({ lng: 2.3522, lat: 48.8566, name: 'france' });
+    fetchWeather.mockResolvedValue({ temp: 15, app_max_temp: 18, app_min_temp: 12, description: 'Cloudy' });
+    fetchCityImage.mockResolvedValue({ image: 'http://example.com/paris.jpg' });
+
+    // Call  function
+    await HandelOutput(mockEvent);
   });
 
-
-
-  it('should handle errors gracefully', async () => {
-    // Mock the API calls to throw errors
-    getCountry.mockRejectedValue(new Error('API Error'));
-    getweather.mockRejectedValue(new Error('API Error'));
-    getcityImage.mockRejectedValue(new Error('API Error'));
+  it('handle error gracefully', async () => {
+    // Mock  API call to throw error
+    fetchCountry.mockRejectedValue(new Error('API Error'));
+    fetchWeather.mockRejectedValue(new Error('API Error'));
+    fetchCityImage.mockRejectedValue(new Error('API Error'));
 
     const mockEvent = { preventDefault: jest.fn() };
 
-    await handelsubment(mockEvent);
+    await HandelOutput(mockEvent);
 
-    // Ensure the UI is not updated when errors occur
+    // Ensure  UI is not updated when errors occur  
     expect(document.getElementById('Rdays').innerHTML).toBe('');
     expect(document.getElementById('cityname').innerHTML).toBe('');
   });
