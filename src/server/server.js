@@ -1,10 +1,10 @@
 // ameen ahmad dababat
 // ameendababat07@gmail.com
 
-/*run server and routes */
+/* server and routes */
 const express = require('express'); 
 
-/* Start up an instance of app */
+/* start instance of app */
 const app = express();
 
 app.use(express.json());
@@ -21,7 +21,7 @@ app.use(cors());
 const dotenv = require('dotenv');
 dotenv.config();
 
-// main  folder
+//the  main    
 app.use(express.static('dist'));
 
 
@@ -86,37 +86,37 @@ app.post('/getcity', async (req, res) => {
     }
 });
 
-//get weather Data Current or forcast  
+//get weather data current or forcast  
 app.post("/getWeather",async (req,res)=> {
 
-    // console.log("received body:", req.body); 
+    // console.log("received body:", req.body); // testing
     
     const {lng,lat,days} = req.body;
 
     if(days<0){
         const errMsg = {
-            message:"date cannot be in the past",
+            message:"date cannot  in the past",
             error:true
         }
         return res.status(400).json(errMsg);
     }
 
     try{
-        // const fetch = (await import('node-fetch')).default;
+        // const fetch = (await import('node-fetch')).default; // testing
 
         if(days >= 0 &&days <= 7){
             // &include=minutely
             const response = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lng}&key=${apikey_weather}&lang=en`);
 
             const dataa = await response.json();
-            // console.log("✅ API Response:", dataa);
+            // console.log("✅ API Response:", dataa); // testing
 
             const {temp ,weather} = dataa.data[0];
-        //  console.log("temp ",temp,"weather ",weather);
+        //  console.log("temp ",temp,"weather ",weather); //trsting
             
 
             const description  = weather.description;
-            // console.log("description ",description);
+            // console.log("description ",description); // testing
 
             res.send({temp,description});
         } else if(days >7){
@@ -130,7 +130,7 @@ app.post("/getWeather",async (req,res)=> {
 
              const {weather,temp,app_max_temp,app_min_temp} = data.data[data.data.length-1];
 
-             // console.log("The Data is ",weather,temp,app_max_temp,app_min_temp);
+             // console.log(" data is ",weather,temp,app_max_temp,app_min_temp);// testing
 
              const description = weather.description;
 
