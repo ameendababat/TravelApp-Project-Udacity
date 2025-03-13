@@ -1,4 +1,6 @@
 const errMsg_city = document.getElementById("msg-error-city"); 
+
+
 const errMsg_date = document.getElementById("msg-error-date"); 
 
 // ameen ahmad dababat

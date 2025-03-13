@@ -124,17 +124,17 @@ app.post("/getWeather",async (req,res)=> {
 
             const data = await response.json();
              //console.log(data.data[data.data.length -1 ]);
-             if (!data || !data.data || data.data.length === 0) {
+            if (!data || !data.data || data.data.length === 0) {
                 return res.status(404).json({ message: "No weather data found", error: true });
             }
 
-             const {weather,temp,app_max_temp,app_min_temp} = data.data[data.data.length-1];
+            const {weather,temp,app_max_temp,app_min_temp} = data.data[data.data.length-1];
 
              // console.log(" data is ",weather,temp,app_max_temp,app_min_temp);// testing
 
-             const description = weather.description;
+            const description = weather.description;
 
-             res.send({description,temp,app_max_temp,app_min_temp});
+            res.send({description,temp,app_max_temp,app_min_temp});
 
 
         }
