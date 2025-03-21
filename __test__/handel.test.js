@@ -15,12 +15,12 @@ describe('HandelOutput', () => {
     document.body.innerHTML = `
       <input id="date" value="2025-12-31" />
       <input id="city" value="Paris" />
-      <div id="Rdays"></div>
+      <div id="numdays"></div>
       <div id="cityname"></div>
       <div id="travelDate"></div>
-      <div id="temp"></div>
+      <div id="tmp"></div>
       <div id="weather"></div>
-      <div id="cityImage"></div>
+      <div id="cityimg"></div>
     `;
   });
 
@@ -50,7 +50,7 @@ describe('HandelOutput', () => {
     await HandelOutput(mockEvent);
 
     // Ensure  UI is not updated when errors occur  
-    expect(document.getElementById('Rdays').innerHTML).toBe('');
+    expect(document.getElementById('numdays').innerHTML).toBe('');
     expect(document.getElementById('cityname').innerHTML).toBe('');
   });
 });
